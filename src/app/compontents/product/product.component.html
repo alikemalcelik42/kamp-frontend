@@ -4,6 +4,13 @@
     </div>
 </div>
 
+<div class="mb-3">
+    <label for="filterText" class="form-label">Search Product</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="search product">
+</div>
+
+{{ filterText }}
+
 <table *ngIf="dataLoaded == true" class="table">
     <thead>
         <tr>
@@ -11,16 +18,20 @@
             <th scope="col">Product Name</th>
             <th scope="col">Category Id</th>
             <th scope="col">Unit Price</th>
+            <th scope="col">VA Unit Price</th>
             <th scope="col">Units In Stock</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let product of products">
+        <tr *ngFor="let product of products | filterPipe:filterText">
             <td> {{ product.productId }} </td>
-            <td> {{ product.productName }} </td>
+            <td> {{ product.productName | uppercase }} </td>
             <td> {{ product.categoryId }} </td>
-            <td> {{ product.unitPrice }} </td>
+            <td> {{ product.unitPrice | currency }} </td>
+            <td> {{ product.unitPrice | vatAdded:18 | currency }} </td>
             <td> {{ product.unitsInStock }} </td>
+            <td> <button (click)="addToCart(product)" class="btn btn-success"> Sepete Ekle </button> </td>
         </tr>
     </tbody>
 </table>

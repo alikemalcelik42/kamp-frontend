@@ -43,7 +43,8 @@ export class CategoryComponent implements OnInit {
   }
 
   removeCurrentCategory() {
-    this.currentCategory;
+    if(this.currentCategory)
+      this.currentCategory = null;
   }
 
 }
